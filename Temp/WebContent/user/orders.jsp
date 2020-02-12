@@ -96,16 +96,12 @@
 					</li>
 					<!-- Pulsanti login-dependent -->
 					<li class="nav-item py-0 login-dependent" id="ordini"><a
-						class="nav-link" href="#"><button
-								type="button" class="btn btn-primary order-button"
-								data-toggle="modal">Ordini</button></a></li>
+						class="nav-link" href="#"><button type="button"
+								class="btn btn-primary order-button" data-toggle="modal">Ordini</button></a></li>
 					<li class="nav-item py-0 login-dependent" id="profilo"><a
 						class="nav-link" href="user?page=profile"><button
 								type="button" class="btn btn-primary profile-button"
 								data-toggle="modal">Profilo</button></a></li>
-					<li class="nav-item py-0 login-dependent" id="dieta"><a
-						href="user/manageDiet" class="nav-link"><button type="button"
-								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
 				</ul>
 			</div>
 		</div>
@@ -183,13 +179,13 @@
 			<p class="footer-company-about">
 				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
 				da un gruppo di studenti dell'Università della Calabria,
-				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
-				del Software.
+				dipartimento di Matematica e Informatica, per l'esame di Web
+				Computing.
 			</p>
 			<div class="footer-icons">
 				<a href="https://www.mat.unical.it/demacs"><img
 					src="images/logo_unical.png" width="24" height="20"></img></a> <a
-					href="https://github.com/Goffredson/Trispesa"><i
+					href="https://github.com/Goffredson/New-Trispesa"><i
 					class="fa fa-github"></i></a>
 			</div>
 		</div>

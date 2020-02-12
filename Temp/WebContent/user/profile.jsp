@@ -61,39 +61,6 @@
 			<!-- UL di carrello, login, etc. -->
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-
-					<li class="nav-item py-0">
-						<!-- Div di login -->
-						<div class="dropdown" id="loginDropdown">
-							<a class="btn btn-secondary dropdown-toggle login-button" href=""
-								role="button" id="loginButton" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">Login</a>
-							<div class="dropdown-menu login-dropdown">
-								<form class="px-4 py-3">
-									<div class="form-group">
-										<label for="inputUsername">Nome utente</label> <input
-											type="text" class="form-control" id="inputUsername"
-											placeholder="Inserisci nome utente">
-									</div>
-									<div class="form-group">
-										<label for="inputPassword">Password</label> <input
-											type="password" class="form-control" id="inputPassword"
-											placeholder="Password">
-									</div>
-									<input type="button" class="btn color-scheme"
-										value="Autenticati" onclick="ajaxLog('login', 500)">
-
-								</form>
-								<div class="dropdown-item" id="credenzialiErrate"
-									style="color: red; display: none;">Username o password
-									errati.</div>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="" data-toggle="modal"
-									data-target="#modalLogin">Effettua registrazione</a> <a
-									class="dropdown-item" href="">Password dimenticata?</a>
-							</div>
-						</div>
-					</li>
 					<!-- Pulsanti login-dependent -->
 					<li class="nav-item py-0 login-dependent" id="ordini"><a
 						class="nav-link" href="user?page=orders"><button type="button"
@@ -101,10 +68,6 @@
 					<li class="nav-item py-0 login-dependent" id="profilo"><a
 						class="nav-link" href="#"><button type="button"
 								class="btn btn-primary profile-button" data-toggle="modal">Profilo</button></a></li>
-					<li class="nav-item py-0 login-dependent" id="dieta"><a
-						href="user/manageDiet" class="nav-link"><button type="button"
-								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
-				</ul>
 			</div>
 		</div>
 		<!-- Aggiorno la navbar se c'è un cliente in sessione -->
@@ -115,22 +78,6 @@
 		</c:if>
 	</nav>
 	<!-- Chiusura navbar principale -->
-
-	<!-- Sezione toast -->
-	<!-- Toast carrello svuotato -->
-	<div id="cartToast" class="toast notification-toast" role="alert"
-		aria-live="assertive" aria-atomic="true" data-delay="5000">
-		<div class="toast-header error-color-scheme">
-			<strong class="mr-auto">Trispesa staff</strong> <small>ora</small>
-			<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="toast-body" id="cartToastMessage">Hai esaurito il
-			tempo a disposizione, il tuo carrello è stato svuotato.</div>
-	</div>
-	<!-- Chiusura sezione toast -->
 
 	<div class="container">
 		<div class="row">
@@ -155,7 +102,7 @@
 							</div>
 						</div>
 						<button id="mod-username-button" type="button"
-							onclick="modUsername()" class="btn btn-success" disabled>Modifica</button>
+							onclick="modUsername()" class="btn add-item" disabled>Modifica</button>
 					</form>
 				</div>
 				<div>
@@ -189,7 +136,7 @@
 							</div>
 						</div>
 						<button id="mod-password-button" type="button"
-							onclick="modPassword()" class="btn btn-success">Modifica</button>
+							onclick="modPassword()" class="btn add-item">Modifica</button>
 					</form>
 				</div>
 				<div>
@@ -208,7 +155,7 @@
 							</div>
 						</div>
 						<button id="mod-name-button" type="button" onclick="modName()"
-							class="btn btn-success">Modifica</button>
+							class="btn add-item">Modifica</button>
 					</form>
 				</div>
 				<div>
@@ -228,7 +175,7 @@
 							</div>
 						</div>
 						<button id="mod-surname-button" type="button"
-							onclick="modSurname()" class="btn btn-success">Modifica</button>
+							onclick="modSurname()" class="btn add-item">Modifica</button>
 					</form>
 				</div>
 				<div>
@@ -247,7 +194,7 @@
 							</div>
 						</div>
 						<button id="mod-email-button" type="button" onclick="modEmail()"
-							class="btn btn-success">Modifica</button>
+							class="btn add-item">Modifica</button>
 					</form>
 				</div>
 				<div>
@@ -267,7 +214,7 @@
 							</div>
 						</div>
 						<button id="mod-birth-date-button" type="button"
-							onclick="modBirthDate()" class="btn btn-success">Modifica</button>
+							onclick="modBirthDate()" class="btn add-item">Modifica</button>
 					</form>
 				</div>
 			</div>
@@ -283,7 +230,7 @@
 							<th>CAP</th>
 							<th>Indirizzo</th>
 							<th colspan="2"><button id="add-deivery-address"
-									onclick="prepareAddDeliveryAddress()" class="btn btn-success"
+									onclick="prepareAddDeliveryAddress()" class="btn add-item"
 									role="button">+ Aggiungi indirizzo di consegna</button></th>
 						</tr>
 						<c:forEach items="${sessionScope.customer.deliveryAddresses}"
@@ -297,13 +244,13 @@
 								<td width="10%"><button
 										id="modify-delivery-address-${deliveryAddress.id}"
 										onclick="prepareModDeliveryAddress(${deliveryAddress.id})"
-										class="btn btn-info" role="button">Modifica indirizzo
+										class="btn mod-item" role="button">Modifica indirizzo
 										di consegna</button></td>
 								<td width="10%"><button
 										id="delete-delivery-address-${deliveryAddress.id}"
 										onclick="deleteDeliveryAddress(${deliveryAddress.id})"
-										class="btn btn-danger" role="button">Elimina
-										indirizzo di consegna</button></td>
+										class="btn del-item" role="button">Elimina indirizzo
+										di consegna</button></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -317,7 +264,7 @@
 							<th>Proprietario</th>
 							<th>Data scadenza</th>
 							<th colspan="2"><button id="add-payment-method"
-									onclick="prepareAddPaymentMethod()" class="btn btn-success"
+									onclick="prepareAddPaymentMethod()" class="btn add-item"
 									role="button">+ Aggiungi metodo di pagamento</button></th>
 						</tr>
 						<c:forEach items="${sessionScope.customer.paymentMethods}"
@@ -329,13 +276,13 @@
 								<td width="10%"><button
 										id="modify-payment-method-${paymentMethod.id}"
 										onclick="prepareModPaymentMethod(${paymentMethod.id})"
-										class="btn btn-info" role="button">Modifica metodo di
+										class="btn mod-item" role="button">Modifica metodo di
 										pagamento</button></td>
 								<td width="10%">
 									<button id="delete-payment-method-${paymentMethod.id}"
 										onclick="deletePaymentMethod(${paymentMethod.id})"
-										class="btn btn-danger" role="button">Elimina metodo
-										di pagamento</button>
+										class="btn del-item" role="button">Elimina metodo di
+										pagamento</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -424,11 +371,9 @@
 				</div>
 				<div class="modal-footer">
 					<button id="manage-payment-method-button" type="button"
-						class="btn btn-success"></button>
-					<button type="button" class="btn btn-secondary"
-						onclick="clearForm()">Reset</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Chiudi</button>
+						class="btn add-item"></button>
+					<button type="button" class="btn back-item" onclick="clearForm()">Reset</button>
+					<button type="button" class="btn back-item" data-dismiss="modal">Chiudi</button>
 				</div>
 			</div>
 		</div>
@@ -488,11 +433,9 @@
 				</div>
 				<div class="modal-footer">
 					<button id="manage-delivery-address-button" type="button"
-						class="btn btn-success"></button>
-					<button type="button" class="btn btn-secondary"
-						onclick="clearForm()">Reset</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Chiudi</button>
+						class="btn add-item"></button>
+					<button type="button" class="btn back-item" onclick="clearForm()">Reset</button>
+					<button type="button" class="btn back-item" data-dismiss="modal">Chiudi</button>
 				</div>
 			</div>
 		</div>
@@ -527,13 +470,13 @@
 			<p class="footer-company-about">
 				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
 				da un gruppo di studenti dell'Università della Calabria,
-				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
-				del Software.
+				dipartimento di Matematica e Informatica, per l'esame di Web
+				Computing.
 			</p>
 			<div class="footer-icons">
 				<a href="https://www.mat.unical.it/demacs"><img
 					src="images/logo_unical.png" width="24" height="20"></img></a> <a
-					href="https://github.com/Goffredson/Trispesa"><i
+					href="https://github.com/Goffredson/New-Trispesa"><i
 					class="fa fa-github"></i></a>
 			</div>
 		</div>

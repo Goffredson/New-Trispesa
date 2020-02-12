@@ -62,11 +62,6 @@
 			<!-- UL di carrello, login, etc. -->
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto" id="ulNavBar">
-					<a href="#">
-						<li class="nav-item py-0 item-icon-cart"><i
-							class="fa fa-shopping-cart cart-icon" aria-hidden="true"
-							data-toggle="modal" data-target="#modalCart"></i></li>
-					</a>
 					<li class="nav-item py-0">
 						<!-- Div di login -->
 						<div class="dropdown" id="loginDropdown">
@@ -109,9 +104,6 @@
 						class="nav-link" href="../user?page=profile"><button
 								type="button" class="btn btn-primary profile-button"
 								data-toggle="modal">Profilo</button></a></li>
-					<li class="nav-item py-0 login-dependent" id="dieta"><a
-						href="manageDiet" class="nav-link"><button type="button"
-								class="btn btn-primary diet-button" data-toggle="modal">Dieta</button></a></li>
 					<li class="nav-item py-0"><input type="button"
 						id="logoutButton" class="btn login-dependent logout-button"
 						value="Logout" onclick="ajaxLog('logout', 500)"></li>
@@ -339,12 +331,12 @@
 				<c:if test="${not fn:startsWith(categoria.name, 'Altro')}">
 					<a
 						class="w3-bar-item w3-mobile w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green"
-						href="showProducts?categoria=${categoria.id}">${categoria.name}</a>
+						href="">${categoria.name}</a>
 				</c:if>
 			</c:forEach>
 		</div>
 		<!-- Form di ricerca -->
-		<form id="searchProduct" action="showProducts" method="post">
+		<form id="searchProduct" action="" method="post">
 			<div class="d-flex justify-content-center h-100">
 				<div class="searchbar">
 					<input class="search_input" id="nomeProdotto" name="nomeProdotto"
@@ -375,8 +367,7 @@
 						<b>${prodottoScontato.roundedDiscountedPrice}&euro;</b>
 						<button style="float: right; color: #e9b96e;"
 							class="btn fa fa-shopping-cart item-icon-cart"
-							onclick="$('#addToCartToast').toast('show');										
-						updateCart(${prodottoScontato.id}, '${prodottoScontato.name}', ${prodottoScontato.roundedDiscountedPrice}, '${prodottoScontato.superMarket.name}', 'add')"
+							onclick="$('#addToCartToast').toast('show')"
 							id="addToCartProductDiscounted">+</button>
 					</div>
 					<div class="card-footer">Venduto da:
@@ -386,86 +377,6 @@
 		</div>
 	</div>
 	<!-- Chiusura carousel di categorie -->
-
-	<!-- Carrello -->
-	<div class="modal fade" id="modalCart" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Il tuo carrello</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true"></span>
-					</button>
-				</div>
-				<div class="modal-body" id="modalTemp">
-					<div class="count">
-						<h3>
-							<small>Tempo rimanente</small>
-						</h3>
-						<div id="timer"></div>
-					</div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>N.</th>
-								<th>Nome prodotto</th>
-								<th>Prezzo</th>
-								<th></th>
-
-							</tr>
-						</thead>
-						<tbody id="listaProdottiCarrello">
-							<c:set var="totalCartPrice" scope="request" value="${0}" />
-							<c:forEach items="${customer.cart}" var="product">
-								<c:set var="totalCartPrice" scope="request"
-									value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
-
-								<tr id="product_${product.key.id}">
-									<th scope="row" id="productQuantity">${product.value}</th>
-									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-									<td><a><i class="fas fa-times"></i></a></td>
-									<td><button type="button"
-											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
-											class="btn btn-danger">Rimuovi</button></td>
-								</tr>
-							</c:forEach>
-							<c:forEach items="${anonymousCart}" var="product">
-								<c:set var="totalCartPrice" scope="request"
-									value="${totalCartPrice + product.key.roundedDiscountedPrice*product.value}" />
-
-								<tr id="product_${product.key.id}">
-									<th scope="row" id="productQuantity">${product.value}</th>
-									<td id="productName">${product.key.name}</td>
-									<td id="productPrice">${product.key.roundedDiscountedPrice*product.value}&euro;</td>
-									<td><a><i class="fas fa-times"></i></a></td>
-									<td><button type="button"
-											onclick="updateCart(${product.key.id}, '${product.key.name}', ${product.key.roundedDiscountedPrice}, '${product.key.superMarket.name}', 'remove');"
-											class="btn btn-danger">Rimuovi</button></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<h2 id="totalCartPrice" class="hidden-xs text-center">${totalCartPrice}&euro;</h2>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn color-scheme" data-dismiss="modal">Chiudi</button>
-					<c:if test="${customer != null}">
-						<a id="orderButton" href="manageOrder"><button
-								class="btn color-scheme">Conferma ordine</button></a>
-					</c:if>
-					<c:if test="${customer == null}">
-						<a id="orderAnchor" href="#"><button id="orderButton"
-								onclick="$('#modalCart').modal('hide'); $('.modal-backdrop').hide(); $('#loginToast').toast('show'); $('.dropdown-menu').show();"
-								class="btn color-scheme">Conferma ordine</button></a>
-					</c:if>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Chiusura carrello -->
 
 	<!-- Footer della pagina -->
 	<footer class="footer-distributed">
@@ -497,13 +408,12 @@
 			<p class="footer-company-about">
 				<span>Informazioni sito:</span> Questo progetto è stato sviluppato
 				da un gruppo di studenti dell'Università della Calabria,
-				dipartimento di Matematica e Informatica, per l'esame di Ingegneria
-				del Software.
+				dipartimento di Matematica e Informatica, per l'esame di Web Computing.
 			</p>
 			<div class="footer-icons">
 				<a href="https://www.mat.unical.it/demacs"><img
 					src="../images/logo_unical.png" width="24" height="20"></img></a> <a
-					href="https://github.com/Goffredson/Trispesa"><i
+					href="https://github.com/Goffredson/New-Trispesa"><i
 					class="fa fa-github"></i></a>
 			</div>
 		</div>
