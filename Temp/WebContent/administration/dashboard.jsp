@@ -94,7 +94,7 @@
 
 		<div class="row mx-auto">
 			<div class="col-lg-6 col-md-6 mb-4">
-				<a href="#">
+				<a href="administration/statistics">
 					<div class="card d-flex">
 						<img class="card-img-top"
 							src="images/administration/statistics.jpg" height="250" alt="" />

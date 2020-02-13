@@ -214,4 +214,24 @@
 		<url-pattern>/user/manageUserForm</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Statistics</servlet-name>
+		<servlet-class>controller.administration.Statistics</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Statistics</servlet-name>
+		<url-pattern>/administration/statistics</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ManageData</servlet-name>
+		<servlet-class>controller.administration.ManageData</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ManageData</servlet-name>
+		<url-pattern>/administration/statistics/manageData</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

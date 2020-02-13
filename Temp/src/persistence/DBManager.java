@@ -435,11 +435,48 @@ public class DBManager {
 
 	public String getCustomerEmail(String username) {
 		return getCustomerDao().retrieveEmail(username);
-		
+
 	}
 
 	public void updateCustomerPassword(String username, String newPassword) {
 		getCustomerDao().updatePassword(username, newPassword);
-		
+
 	}
+
+	public ArrayList<SuperMarket> getSuperMarketsContainsString(String string) {
+		string = string.toLowerCase();
+		ArrayList<SuperMarket> superMarkets = new ArrayList<SuperMarket>();
+		for (SuperMarket superMarket : getSuperMarkets()) {
+			String address = superMarket.getAddress().toLowerCase();
+			if (address.contains(string)) {
+				superMarkets.add(superMarket);
+			}
+		}
+		return superMarkets;
+	}
+
+	public ArrayList<Category> getCategoriesContainsString(String string) {
+		string = string.toLowerCase();
+		ArrayList<Category> categories = new ArrayList<Category>();
+		for (Category category : getCategories()) {
+			String name = category.getName().toLowerCase();
+			if (name.contains(string)) {
+				categories.add(category);
+			}
+		}
+		return categories;
+	}
+
+	public ArrayList<Product> getProductsContainsString(String string) {
+		string = string.toLowerCase();
+		ArrayList<Product> products = new ArrayList<Product>();
+		for (Product product : getProducts()) {
+			String all = product.toString().toLowerCase();
+			if (all.contains(string)) {
+				products.add(product);
+			}
+		}
+		return products;
+	}
+
 }
