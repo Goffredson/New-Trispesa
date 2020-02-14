@@ -1,6 +1,7 @@
 package persistence.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.Category;
 import model.Product;
@@ -12,10 +13,12 @@ public interface CategoryDao {
 
 	// RETRIEVE
 	public ArrayList<Category> retrieveAll();
-	public Category retrieveByPrimaryKey(Long id);
-	ArrayList<Category> retrieveMacroCategories();
-	public ArrayList<Category> retrieveLeafCategories();
 
+	public Category retrieveByPrimaryKey(Long id);
+
+	ArrayList<Category> retrieveMacroCategories();
+
+	public ArrayList<Category> retrieveLeafCategories();
 
 	// UPDATE
 	public void update(Category category);
@@ -25,5 +28,8 @@ public interface CategoryDao {
 
 	public ArrayList<Category> retrieveLeafCategoriesForDiet();
 
+	public HashMap<String, Long> getCashForAllCategories();
+
+	public HashMap<String, Long> getUnitsForAllCategories();
 
 }

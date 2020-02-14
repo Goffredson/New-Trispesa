@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.Category;
 import model.Product;
@@ -196,6 +197,54 @@ public class CategoryDaoJdbc implements CategoryDao {
 					categories.add(new Category(resultSet.getLong("id"), resultSet.getString("name"),
 							new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(parentId)));
 				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return categories;
+	}
+
+	@Override
+	public HashMap<String, Long> getCashForAllCategories() {
+		HashMap<String, Long> categories = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.name, sum(sub.cash) as tot_cash from (select c.name, p.price*o.amount as cash from order_contains_product as o, product as p, category as c where o.product=p.id and p.category=c.id) as sub group by sub.name";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				categories.put(resultSet.getString("name"), resultSet.getLong("tot_cash"));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return categories;
+	}
+
+	@Override
+	public HashMap<String, Long> getUnitsForAllCategories() {
+		HashMap<String, Long> categories = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.name, sum(sub.units) as tot_units from (select c.name, o.amount as units from order_contains_product as o, product as p, category as c where o.product=p.id and p.category=c.id) as sub group by sub.name";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				categories.put(resultSet.getString("name"), resultSet.getLong("tot_units"));
 			}
 		} catch (SQLException e) {
 			if (connection != null) {

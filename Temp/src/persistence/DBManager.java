@@ -489,4 +489,24 @@ public class DBManager {
 		return supermarkets;
 	}
 
+	public HashMap<String, Long> retrieveAllCategoriesData(String dataType) {
+		HashMap<String, Long> categories;
+		if (dataType.equals("cash")) {
+			categories = getCategoryDao().getCashForAllCategories();
+		} else {
+			categories = getCategoryDao().getUnitsForAllCategories();
+		}
+		return categories;
+	}
+	
+	public HashMap<String, Long> retrieveAllProductsData(String dataType) {
+		HashMap<String, Long> products;
+		if (dataType.equals("cash")) {
+			products = getProductDao().getCashForAllProducts();
+		} else {
+			products = getProductDao().getUnitsForAllProducts();
+		}
+		return products;
+	}
+
 }

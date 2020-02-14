@@ -1,6 +1,7 @@
 package persistence.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import exceptions.DBOperationException;
 import model.Product;
@@ -38,5 +39,9 @@ public interface ProductDao {
 	public ArrayList<Product> retrieveDiscountedProducts();
 
 	public ArrayList<Product> retrieveByCategoryAndWeight(String categoryName, boolean offBrand, long weight);
+
+	public HashMap<String, Long> getCashForAllProducts();
+
+	public HashMap<String, Long> getUnitsForAllProducts();
 
 }

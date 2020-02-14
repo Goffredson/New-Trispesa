@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import exceptions.DBOperationException;
 import model.Product;
@@ -405,7 +406,8 @@ public class ProductDaoJdbc implements ProductDao {
 				try {
 					connection.rollback();
 				} catch (SQLException excep) {
-					throw new DBOperationException("Il seguente prodotto è terminato: ", retrieveByPrimaryKey(product).getName());
+					throw new DBOperationException("Il seguente prodotto è terminato: ",
+							retrieveByPrimaryKey(product).getName());
 				}
 			}
 		}
@@ -469,8 +471,7 @@ public class ProductDaoJdbc implements ProductDao {
 		ArrayList<Product> products = new ArrayList<Product>();
 		try {
 			connection = this.dataSource.getConnection();
-			String query = "select * "
-					+ "from product as prod, category as c "
+			String query = "select * " + "from product as prod, category as c "
 					+ "where prod.category=c.id and c.name=? and prod.quantity > 0 and prod.weight>=? and prod.offbrand=? or exists "
 					+ "(select * from category as cat where cat.name=? and cat.parent=prod.category and prod.weight>=? and prod.offbrand=? and prod.quantity > 0)";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -489,6 +490,66 @@ public class ProductDaoJdbc implements ProductDao {
 						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
 						resultSet.getDouble("discount"), resultSet.getString("image_path"),
 						resultSet.getBoolean("deleted")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return products;
+	}
+
+	@Override
+	public HashMap<String, Long> getCashForAllProducts() {
+		HashMap<String, Long> products = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.id, sum(sub.cash) as tot_cash from (select p.id, p.price*o.amount as cash from order_contains_product as o, product as p where o.product=p.id) as sub group by sub.id";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String query2 = "select concat(name, ' ', brand) as string from product where id=?";
+				PreparedStatement statement2 = connection.prepareStatement(query2);
+				statement2.setLong(1, resultSet.getLong("id"));
+				ResultSet resultSet2 = statement2.executeQuery();
+				if (resultSet2.next()) {
+					products.put(resultSet2.getString("string"), resultSet.getLong("tot_cash"));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return products;
+	}
+
+	@Override
+	public HashMap<String, Long> getUnitsForAllProducts() {
+		HashMap<String, Long> products = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.id, sum(sub.units) as tot_units from (select p.id, o.amount as units from order_contains_product as o, product as p where o.product=p.id) as sub group by sub.id";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String query2 = "select concat(name, ' ', brand) as string from product where id=?";
+				PreparedStatement statement2 = connection.prepareStatement(query2);
+				statement2.setLong(1, resultSet.getLong("id"));
+				ResultSet resultSet2 = statement2.executeQuery();
+				if (resultSet2.next()) {
+					products.put(resultSet2.getString("string"), resultSet.getLong("tot_units"));
+				}
 			}
 		} catch (SQLException e) {
 			if (connection != null) {

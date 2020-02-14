@@ -147,7 +147,22 @@ public class ManageData extends HttpServlet {
 				break;
 			case "category": {
 				if (allCategories) {
+					HashMap<String, Long> categories = DBManager.getInstance().retrieveAllCategoriesData(dataType);
 
+					if (categories.isEmpty()) {
+						result = "[]";
+					} else {
+						StringBuilder tempResult = new StringBuilder();
+						tempResult.append("[");
+						Set<Map.Entry<String, Long>> entry = categories.entrySet();
+						for (Map.Entry<String, Long> temp : entry) {
+							tempResult.append(
+									"{\"label\" : \"" + temp.getKey() + "\", \"y\" : " + temp.getValue() + "},");
+						}
+						tempResult.deleteCharAt(tempResult.length() - 1);
+						tempResult.append("]");
+						result = tempResult.toString();
+					}
 				} else {
 
 				}
@@ -155,7 +170,22 @@ public class ManageData extends HttpServlet {
 				break;
 			case "product": {
 				if (allProducts) {
+					HashMap<String, Long> products = DBManager.getInstance().retrieveAllProductsData(dataType);
 
+					if (products.isEmpty()) {
+						result = "[]";
+					} else {
+						StringBuilder tempResult = new StringBuilder();
+						tempResult.append("[");
+						Set<Map.Entry<String, Long>> entry = products.entrySet();
+						for (Map.Entry<String, Long> temp : entry) {
+							tempResult.append(
+									"{\"label\" : \"" + temp.getKey() + "\", \"y\" : " + temp.getValue() + "},");
+						}
+						tempResult.deleteCharAt(tempResult.length() - 1);
+						tempResult.append("]");
+						result = tempResult.toString();
+					}
 				} else {
 
 				}
