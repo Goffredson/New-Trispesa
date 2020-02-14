@@ -1,6 +1,7 @@
 package persistence.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import exceptions.DBOperationException;
 import model.SuperMarket;
@@ -26,5 +27,9 @@ public interface SuperMarketDao {
 	public ArrayList<SuperMarket> retrieveAffiliate();
 
 	public ArrayList<SuperMarket> retrieveAffiliateDontSellProduct(long barcode);
+
+	public HashMap<String, Long> getCashForAllSupermarkets();
+
+	public HashMap<String, Long> getUnitsForAllSupermarkets();
 
 }

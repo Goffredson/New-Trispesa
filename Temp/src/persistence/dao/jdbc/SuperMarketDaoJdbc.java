@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import exceptions.DBOperationException;
 import model.SuperMarket;
@@ -293,6 +294,66 @@ public class SuperMarketDaoJdbc implements SuperMarketDao {
 //			} catch (SQLException e) {
 //				throw new RuntimeException(e.getMessage());
 //			}
+		}
+		return supermarkets;
+	}
+
+	@Override
+	public HashMap<String, Long> getCashForAllSupermarkets() {
+		HashMap<String, Long> supermarkets = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.super_id as id, sum(sub.cash) as tot_cash from (select s.id as super_id, o.amount*p.price as cash from supermarket as s, product as p, order_contains_product as o where o.product=p.id and p.supermarket=s.id) as sub group by sub.super_id";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String query2 = "select concat(name, ', ', city) as string from supermarket where id=?";
+				PreparedStatement statement2 = connection.prepareStatement(query2);
+				statement2.setLong(1, resultSet.getLong("id"));
+				ResultSet resultSet2 = statement2.executeQuery();
+				if (resultSet2.next()) {
+					supermarkets.put(resultSet2.getString("string"), resultSet.getLong("tot_cash"));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return supermarkets;
+	}
+
+	@Override
+	public HashMap<String, Long> getUnitsForAllSupermarkets() {
+		HashMap<String, Long> supermarkets = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.super_id as id, sum(sub.units) as tot_units from (select s.id as super_id, o.amount as units from supermarket as s, product as p, order_contains_product as o where o.product=p.id and p.supermarket=s.id) as sub group by sub.super_id";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				String query2 = "select concat(name, ', ', city) as string from supermarket where id=?";
+				PreparedStatement statement2 = connection.prepareStatement(query2);
+				statement2.setLong(1, resultSet.getLong("id"));
+				ResultSet resultSet2 = statement2.executeQuery();
+				if (resultSet2.next()) {
+					supermarkets.put(resultSet2.getString("string"), resultSet.getLong("tot_units"));
+				}
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
 		}
 		return supermarkets;
 	}

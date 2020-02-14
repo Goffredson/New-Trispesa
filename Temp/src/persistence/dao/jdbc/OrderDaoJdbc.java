@@ -89,12 +89,12 @@ public class OrderDaoJdbc implements OrderDao {
 						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
 						CurrentState.valueOf(resultSet.getString("current_state")), products);
 				// retrieve all products
-				String productsQuery = "select product, amount from order_contains_product where order=?";
+				String productsQuery = "select product, amount from order_contains_product where orders=?";
 				PreparedStatement productsStatement = connection.prepareStatement(productsQuery);
 				productsStatement.setLong(1, order.getId());
-				ResultSet productsResultSet = statement.executeQuery();
+				ResultSet productsResultSet = productsStatement.executeQuery();
 				while (productsResultSet.next()) {
-					products.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("id")),
+					products.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("product")),
 							productsResultSet.getLong("amount"));
 				}
 			}
@@ -215,7 +215,7 @@ public class OrderDaoJdbc implements OrderDao {
 								.retrieveByPrimaryKey(resultSet.getLong("delivery_address")),
 						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
 						CurrentState.valueOf(resultSet.getString("current_state")), products);
-				
+
 //				// retrieve all products
 //				String productsQuery = "select * from order_contains_product where orders=?";
 //				PreparedStatement productsStatement = connection.prepareStatement(productsQuery);

@@ -96,13 +96,13 @@
 							name="product" />
 					</div>
 					<div id="data-type" class="form-group" style="display: none;">
-						<label for="type">Tipo dei dati:</label> <select name="dataType"
-							class="form-control">
+						<label for="type">Tipo dei dati:</label> <select
+							id="data-type-select" name="dataType" class="form-control">
 							<option value="cash" selected>Guadagni</option>
 							<option value="units">Unità vendute</option>
 						</select>
-						<button type="button" class="btn add-item"
-							onclick="generateGraph()">Genera grafico</button>
+						<button id="generate-graph" type="button" class="btn add-item">Genera
+							grafico</button>
 					</div>
 				</form>
 				<div id="chart-container-1" style="height: 370px; width: 100%;"></div>
@@ -154,223 +154,10 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/manageProduct.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-	<script type="text/javascript">
-		window.onload = function() {
-
-			var chart = new CanvasJS.Chart("chart-container-1", {
-				theme : "light1", // "light2", "dark1", "dark2"
-				animationEnabled : true, // change to true		
-				title : {
-					text : "Basic Column Chart"
-				},
-				data : [ {
-					// Change type to "bar", "area", "spline", "pie",etc.
-					type : "column",
-					dataPoints : [ {
-						label : "apple",
-						y : 50
-					}, {
-						label : "orange",
-						y : 15
-					}, {
-						label : "banana",
-						y : 25
-					}, {
-						label : "mango",
-						y : 30
-					}, {
-						label : "grape",
-						y : 28
-					} ]
-				} ]
-			});
-			chart.render();
-		}
-
-		function typeSelected() {
-			if ($('#type-select').val() == 'null') {
-				if ($('#all-supermarkets').css('display') != 'none') {
-					$('#all-supermarkets').slideToggle('slow');
-				}
-				if ($('#all-categories').css('display') != 'none') {
-					$('#all-categories').slideToggle('slow');
-				}
-				if ($('#all-products').css('display') != 'none') {
-					$('#all-products').slideToggle('slow');
-				}
-				if ($('#data-type').css('display') != 'none') {
-					$('#data-type').slideToggle('slow');
-					$('#all-supermarkets-check').prop('checked', false);
-					$('#supermarket-string').prop('disabled', false);
-					$('#all-categories-check').prop('checked', false);
-					$('#category-string').prop('disabled', false);
-					$('#all-products-check').prop('checked', false);
-					$('#product-string').prop('disabled', false);
-				}
-			} else if ($('#type-select').val() == 'supermarket') {
-				$('#all-supermarkets').slideToggle('slow');
-				if ($('#all-categories').css('display') != 'none') {
-					$('#all-categories').slideToggle('slow');
-				}
-				if ($('#all-products').css('display') != 'none') {
-					$('#all-products').slideToggle('slow');
-				}
-				if ($('#data-type').css('display') != 'none') {
-					$('#data-type').slideToggle('slow');
-					$('#all-supermarkets-check').prop('checked', false);
-					$('#supermarket-string').prop('disabled', false);
-					$('#all-categories-check').prop('checked', false);
-					$('#category-string').prop('disabled', false);
-					$('#all-products-check').prop('checked', false);
-					$('#product-string').prop('disabled', false);
-				}
-			} else if ($('#type-select').val() == 'category') {
-				$('#all-categories').slideToggle('slow');
-				if ($('#all-supermarkets').css('display') != 'none') {
-					$('#all-supermarkets').slideToggle('slow');
-				}
-				if ($('#all-products').css('display') != 'none') {
-					$('#all-products').slideToggle('slow');
-				}
-				if ($('#data-type').css('display') != 'none') {
-					$('#data-type').slideToggle('slow');
-					$('#all-supermarkets-check').prop('checked', false);
-					$('#supermarket-string').prop('disabled', false);
-					$('#all-categories-check').prop('checked', false);
-					$('#category-string').prop('disabled', false);
-					$('#all-products-check').prop('checked', false);
-					$('#product-string').prop('disabled', false);
-				}
-			} else if ($('#type-select').val() == 'product') {
-				$('#all-products').slideToggle('slow');
-				if ($('#all-supermarkets').css('display') != 'none') {
-					$('#all-supermarkets').slideToggle('slow');
-				}
-				if ($('#all-categories').css('display') != 'none') {
-					$('#all-categories').slideToggle('slow');
-				}
-				if ($('#data-type').css('display') != 'none') {
-					$('#data-type').slideToggle('slow');
-					$('#all-supermarkets-check').prop('checked', false);
-					$('#supermarket-string').prop('disabled', false);
-					$('#all-categories-check').prop('checked', false);
-					$('#category-string').prop('disabled', false);
-					$('#all-products-check').prop('checked', false);
-					$('#product-string').prop('disabled', false);
-				}
-			}
-		}
-
-		function allSupermarketsSelected() {
-			if ($('#all-supermarkets-check').is(':checked')) {
-				$('#supermarket-string').prop('disabled', true);
-				$('#supermarket-string').val('');
-				$('#data-type').slideToggle('slow');
-			} else {
-				$('#supermarket-string').prop('disabled', false);
-				$('#data-type').slideToggle('slow');
-			}
-		}
-
-		function allCategoriesSelected() {
-			if ($('#all-categories-check').is(':checked')) {
-				$('#category-string').prop('disabled', true);
-				$('#category-string').val('');
-				$('#data-type').slideToggle('slow');
-			} else {
-				$('#category-string').prop('disabled', false);
-				$('#data-type').slideToggle('slow');
-			}
-		}
-
-		function allProductsSelected() {
-			if ($('#all-products-check').is(':checked')) {
-				$('#product-string').prop('disabled', true);
-				$('#product-string').val('');
-				$('#data-type').slideToggle('slow');
-			} else {
-				$('#product-string').prop('disabled', false);
-				$('#data-type').slideToggle('slow');
-			}
-		}
-
-		$('#supermarket-string').autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					type : "GET",
-					url : 'statistics/manageData?action=retrieveSupermarkets',
-					dataType : "json",
-					contentType : "application/json; charset=UTF-8",
-					data : {
-						term : req.term
-					},
-					success : function(data) {
-						resp(data);
-					}
-				});
-			},
-			minLength : 2,
-			select : function(e, ui) {
-				$('#supermarket-string').val(ui.item.value);
-				$('#supermarket-id').val(ui.item.id);
-				$('#data-type').slideToggle('slow');
-			}
-		});
-
-		$('#category-string').autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					type : "GET",
-					url : 'statistics/manageData?action=retrieveCategories',
-					dataType : "json",
-					contentType : "application/json; charset=UTF-8",
-					data : {
-						term : req.term
-					},
-					success : function(data) {
-						resp(data);
-					}
-				});
-			},
-			minLength : 2,
-			select : function(e, ui) {
-				$('#category-string').val(ui.item.value);
-				$('#category-id').val(ui.item.id);
-				$('#data-type').slideToggle('slow');
-			}
-		});
-
-		$('#product-string').autocomplete({
-			source : function(req, resp) {
-				$.ajax({
-					type : "GET",
-					url : 'statistics/manageData?action=retrieveProducts',
-					dataType : "json",
-					contentType : "application/json; charset=UTF-8",
-					data : {
-						term : req.term
-					},
-					success : function(data) {
-						resp(data);
-					}
-				});
-			},
-			minLength : 2,
-			select : function(e, ui) {
-				$('#product-string').val(ui.item.value);
-				$('#product-id').val(ui.item.id);
-				$('#data-type').slideToggle('slow');
-			}
-		});
-
-		function generateGraph() {
-
-		}
-	</script>
+	<script src="../js/statistics.js"></script>
 </body>
 </html>
