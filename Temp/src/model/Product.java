@@ -160,7 +160,7 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return barcode + ", " + name + ", " + superMarket + ", " + category;
+		return barcode + ", " + name + ", " + brand + ", " + superMarket + ", " + category;
 	}
 
 	@Override

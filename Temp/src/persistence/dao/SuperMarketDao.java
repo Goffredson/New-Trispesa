@@ -32,4 +32,8 @@ public interface SuperMarketDao {
 
 	public HashMap<String, Long> getUnitsForAllSupermarkets();
 
+	public HashMap<String, Long> getYearlyCashForSupermarket(long id);
+
+	public HashMap<String, Long> getYearlyUnitsForSupermarket(long id);
+
 }

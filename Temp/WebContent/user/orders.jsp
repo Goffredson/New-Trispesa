@@ -134,6 +134,7 @@
 		<h2>Riepilogo ordini</h2>
 		<table class="table table-hover table-responsive">
 			<tr>
+				<th>Data</th>
 				<th>Stato</th>
 				<th>Indirizzo di consegna</th>
 				<th>Metodo di pagamento</th>
@@ -141,6 +142,7 @@
 			</tr>
 			<c:forEach items="${orders}" var="order">
 				<tr>
+					<td>${order.orderDate}</td>
 					<td>${order.currentState}</td>
 					<td>${order.deliveryAddress}</td>
 					<td>${order.paymentMethod}</td>

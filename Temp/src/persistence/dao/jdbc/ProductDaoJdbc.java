@@ -563,4 +563,54 @@ public class ProductDaoJdbc implements ProductDao {
 		return products;
 	}
 
+	@Override
+	public HashMap<String, Long> getYearlyCashForProduct(long id) {
+		HashMap<String, Long> years = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.year, sum(sub.cash) as tot_cash from (select extract(year from o.order_date) as year, p.price*op.amount as cash from orders as o, order_contains_product as op, product as p where op.orders=o.id and op.product=p.id and p.id=?) as sub group by sub.year";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				years.put(resultSet.getString("year"), resultSet.getLong("tot_cash"));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return years;
+	}
+
+	@Override
+	public HashMap<String, Long> getYearlyUnitsForProduct(long id) {
+		HashMap<String, Long> years = new HashMap<String, Long>();
+		Connection connection = null;
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select sub.year, sum(sub.units) as tot_units from (select extract(year from o.order_date) as year, op.amount as units from orders as o, order_contains_product as op, product as p where op.orders=o.id and op.product=p.id and p.id=?) as sub group by sub.year";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				years.put(resultSet.getString("year"), resultSet.getLong("tot_units"));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return years;
+	}
+
 }

@@ -44,4 +44,8 @@ public interface ProductDao {
 
 	public HashMap<String, Long> getUnitsForAllProducts();
 
+	public HashMap<String, Long> getYearlyCashForProduct(long id);
+
+	public HashMap<String, Long> getYearlyUnitsForProduct(long id);
+
 }

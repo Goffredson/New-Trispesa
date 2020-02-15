@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +88,7 @@ public class OrderDaoJdbc implements OrderDao {
 						new DeliveryAddressDaoJdbc(dataSource)
 								.retrieveByPrimaryKey(resultSet.getLong("delivery_address")),
 						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
+						resultSet.getDate("order_date").toLocalDate(),
 						CurrentState.valueOf(resultSet.getString("current_state")), products);
 				// retrieve all products
 				String productsQuery = "select product, amount from order_contains_product where orders=?";
@@ -94,7 +96,8 @@ public class OrderDaoJdbc implements OrderDao {
 				productsStatement.setLong(1, order.getId());
 				ResultSet productsResultSet = productsStatement.executeQuery();
 				while (productsResultSet.next()) {
-					products.put(new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("product")),
+					products.put(
+							new ProductDaoJdbc(dataSource).retrieveByPrimaryKey(productsResultSet.getLong("product")),
 							productsResultSet.getLong("amount"));
 				}
 			}
@@ -133,6 +136,7 @@ public class OrderDaoJdbc implements OrderDao {
 						new DeliveryAddressDaoJdbc(dataSource)
 								.retrieveByPrimaryKey(resultSet.getLong("delivery_address")),
 						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
+						resultSet.getDate("order_date").toLocalDate(),
 						CurrentState.valueOf(resultSet.getString("current_state")), products);
 				// retrieve all products
 				String productsQuery = "select product, amount from order_contains_product where order=?";
@@ -214,6 +218,7 @@ public class OrderDaoJdbc implements OrderDao {
 						new DeliveryAddressDaoJdbc(dataSource)
 								.retrieveByPrimaryKey(resultSet.getLong("delivery_address")),
 						new PaymentMethodDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("payment_method")),
+						resultSet.getDate("order_date").toLocalDate(),
 						CurrentState.valueOf(resultSet.getString("current_state")), products);
 
 //				// retrieve all products

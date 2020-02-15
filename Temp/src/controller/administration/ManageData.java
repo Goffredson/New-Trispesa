@@ -6,11 +6,17 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +26,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
-import exceptions.DBOperationException;
 import model.Category;
-import model.OperationResult;
 import model.Product;
 import model.SuperMarket;
-import model.Product;
 import persistence.DBManager;
 
 public class ManageData extends HttpServlet {
@@ -60,7 +63,7 @@ public class ManageData extends HttpServlet {
 		case "retrieveCategories": {
 			String string = req.getParameter("term");
 
-			ArrayList<Category> categories = DBManager.getInstance().getCategoriesContainsString(string);
+			ArrayList<Category> categories = DBManager.getInstance().getLeafCategoriesContainsString(string);
 
 			if (categories.isEmpty()) {
 				result = "[]";
@@ -141,7 +144,31 @@ public class ManageData extends HttpServlet {
 						result = tempResult.toString();
 					}
 				} else {
+					HashMap<String, Long> years = DBManager.getInstance()
+							.retrieveYearlySupermarketData(Long.parseLong(supermarketId), dataType);
 
+					if (years.isEmpty()) {
+						result = "[]";
+					} else {
+						StringBuilder tempResult = new StringBuilder();
+						tempResult.append("[");
+						TreeSet<Map.Entry<String, Long>> set = new TreeSet<Map.Entry<String, Long>>(
+								new Comparator<Map.Entry<String, Long>>() {
+
+									@Override
+									public int compare(Entry<String, Long> o1, Entry<String, Long> o2) {
+										return o1.getKey().compareTo(o2.getKey());
+									}
+								});
+						set.addAll(years.entrySet());
+						for (Map.Entry<String, Long> temp : set) {
+							tempResult.append(
+									"{\"label\" : \"" + temp.getKey() + "\", \"y\" : " + temp.getValue() + "},");
+						}
+						tempResult.deleteCharAt(tempResult.length() - 1);
+						tempResult.append("]");
+						result = tempResult.toString();
+					}
 				}
 			}
 				break;
@@ -164,7 +191,31 @@ public class ManageData extends HttpServlet {
 						result = tempResult.toString();
 					}
 				} else {
+					HashMap<String, Long> years = DBManager.getInstance()
+							.retrieveYearlyCategoryData(Long.parseLong(categoryId), dataType);
 
+					if (years.isEmpty()) {
+						result = "[]";
+					} else {
+						StringBuilder tempResult = new StringBuilder();
+						tempResult.append("[");
+						TreeSet<Map.Entry<String, Long>> set = new TreeSet<Map.Entry<String, Long>>(
+								new Comparator<Map.Entry<String, Long>>() {
+
+									@Override
+									public int compare(Entry<String, Long> o1, Entry<String, Long> o2) {
+										return o1.getKey().compareTo(o2.getKey());
+									}
+								});
+						set.addAll(years.entrySet());
+						for (Map.Entry<String, Long> temp : set) {
+							tempResult.append(
+									"{\"label\" : \"" + temp.getKey() + "\", \"y\" : " + temp.getValue() + "},");
+						}
+						tempResult.deleteCharAt(tempResult.length() - 1);
+						tempResult.append("]");
+						result = tempResult.toString();
+					}
 				}
 			}
 				break;
@@ -187,7 +238,31 @@ public class ManageData extends HttpServlet {
 						result = tempResult.toString();
 					}
 				} else {
+					HashMap<String, Long> years = DBManager.getInstance()
+							.retrieveYearlyProductData(Long.parseLong(productId), dataType);
 
+					if (years.isEmpty()) {
+						result = "[]";
+					} else {
+						StringBuilder tempResult = new StringBuilder();
+						tempResult.append("[");
+						TreeSet<Map.Entry<String, Long>> set = new TreeSet<Map.Entry<String, Long>>(
+								new Comparator<Map.Entry<String, Long>>() {
+
+									@Override
+									public int compare(Entry<String, Long> o1, Entry<String, Long> o2) {
+										return o1.getKey().compareTo(o2.getKey());
+									}
+								});
+						set.addAll(years.entrySet());
+						for (Map.Entry<String, Long> temp : set) {
+							tempResult.append(
+									"{\"label\" : \"" + temp.getKey() + "\", \"y\" : " + temp.getValue() + "},");
+						}
+						tempResult.deleteCharAt(tempResult.length() - 1);
+						tempResult.append("]");
+						result = tempResult.toString();
+					}
 				}
 			}
 				break;

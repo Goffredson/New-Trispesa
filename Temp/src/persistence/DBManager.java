@@ -2,6 +2,7 @@ package persistence;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ListIterator;
@@ -60,8 +61,8 @@ public class DBManager {
 	private DBManager() {
 		try {
 			Class.forName("org.postgresql.Driver").newInstance();
-			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/zqnyocaq", "zqnyocaq",
-					"DJ8nD9eyeT4VjZAvTnAvUDcc-ExoZTN_");
+			dataSource = new DataSource("jdbc:postgresql://rogue.db.elephantsql.com:5432/fvaacqwx", "fvaacqwx",
+					"zHJtxtbMYLD_uu5FOhPcqVi6yHP0hHlO");
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -293,7 +294,8 @@ public class DBManager {
 		DeliveryAddress deliveryAddress = getDeliveryAddressDao()
 				.retrieveByPrimaryKey(Long.parseLong(deliveryAddressId));
 		PaymentMethod paymentMethod = getPaymentMethodDao().retrieveByPrimaryKey(Long.parseLong(paymentId));
-		Order order = new Order(totalPrice, customer, deliveryAddress, paymentMethod, customer.getCart());
+		Order order = new Order(totalPrice, customer, deliveryAddress, paymentMethod, LocalDate.now(),
+				customer.getCart());
 		getOrderDao().insert(order);
 		customer.getCart().clear();
 		getCustomerDao().clearCart(customer.getId());
@@ -430,7 +432,15 @@ public class DBManager {
 	}
 
 	public ArrayList<Order> getOrdersOfCustomer(Customer customer) {
-		return getOrderDao().getOrdersOfCustomer(customer.getId());
+		ArrayList<Order> orders = getOrderDao().getOrdersOfCustomer(customer.getId());
+		orders.sort(new Comparator<Order>() {
+
+			@Override
+			public int compare(Order o1, Order o2) {
+				return -o1.getOrderDate().compareTo(o2.getOrderDate());
+			}
+		});
+		return orders;
 	}
 
 	public String getCustomerEmail(String username) {
@@ -455,10 +465,10 @@ public class DBManager {
 		return superMarkets;
 	}
 
-	public ArrayList<Category> getCategoriesContainsString(String string) {
+	public ArrayList<Category> getLeafCategoriesContainsString(String string) {
 		string = string.toLowerCase();
 		ArrayList<Category> categories = new ArrayList<Category>();
-		for (Category category : getCategories()) {
+		for (Category category : getLeafCategories()) {
 			String name = category.getName().toLowerCase();
 			if (name.contains(string)) {
 				categories.add(category);
@@ -498,7 +508,7 @@ public class DBManager {
 		}
 		return categories;
 	}
-	
+
 	public HashMap<String, Long> retrieveAllProductsData(String dataType) {
 		HashMap<String, Long> products;
 		if (dataType.equals("cash")) {
@@ -507,6 +517,36 @@ public class DBManager {
 			products = getProductDao().getUnitsForAllProducts();
 		}
 		return products;
+	}
+
+	public HashMap<String, Long> retrieveYearlySupermarketData(long id, String dataType) {
+		HashMap<String, Long> years;
+		if (dataType.equals("cash")) {
+			years = getSuperMarketDao().getYearlyCashForSupermarket(id);
+		} else {
+			years = getSuperMarketDao().getYearlyUnitsForSupermarket(id);
+		}
+		return years;
+	}
+
+	public HashMap<String, Long> retrieveYearlyCategoryData(long id, String dataType) {
+		HashMap<String, Long> years;
+		if (dataType.equals("cash")) {
+			years = getCategoryDao().getYearlyCashForCategory(id);
+		} else {
+			years = getCategoryDao().getYearlyUnitsForCategory(id);
+		}
+		return years;
+	}
+
+	public HashMap<String, Long> retrieveYearlyProductData(long id, String dataType) {
+		HashMap<String, Long> years;
+		if (dataType.equals("cash")) {
+			years = getProductDao().getYearlyCashForProduct(id);
+		} else {
+			years = getProductDao().getYearlyUnitsForProduct(id);
+		}
+		return years;
 	}
 
 }

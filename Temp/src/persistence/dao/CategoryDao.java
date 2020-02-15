@@ -32,4 +32,8 @@ public interface CategoryDao {
 
 	public HashMap<String, Long> getUnitsForAllCategories();
 
+	public HashMap<String, Long> getYearlyCashForCategory(long id);
+
+	public HashMap<String, Long> getYearlyUnitsForCategory(long id);
+
 }

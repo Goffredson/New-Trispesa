@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Order {
@@ -9,32 +10,35 @@ public class Order {
 	private Customer customer;
 	private DeliveryAddress deliveryAddress;
 	private PaymentMethod paymentMethod;
+	private LocalDate orderDate;
 	private CurrentState currentState;
 	private HashMap<Product, Long> products;
 
 	public Order(long id, double totalPrice, Customer customer, DeliveryAddress deliveryAddress,
-			PaymentMethod paymentMethod, CurrentState currentState, HashMap<Product, Long> products) {
+			PaymentMethod paymentMethod, LocalDate orderDate, CurrentState currentState,
+			HashMap<Product, Long> products) {
 		super();
 		this.id = id;
 		this.totalPrice = totalPrice;
 		this.customer = customer;
 		this.deliveryAddress = deliveryAddress;
 		this.paymentMethod = paymentMethod;
+		this.orderDate = orderDate;
 		this.currentState = currentState;
 		this.products = products;
 	}
-	
-	public Order(double totalPrice, Customer customer, DeliveryAddress deliveryAddress,
-			PaymentMethod paymentMethod, HashMap<Product, Long> products) {
+
+	public Order(double totalPrice, Customer customer, DeliveryAddress deliveryAddress, PaymentMethod paymentMethod,
+			LocalDate orderDate, HashMap<Product, Long> products) {
 		super();
 		this.totalPrice = totalPrice;
 		this.customer = customer;
 		this.deliveryAddress = deliveryAddress;
 		this.paymentMethod = paymentMethod;
+		this.orderDate = orderDate;
 		this.products = products;
 		this.currentState = CurrentState.ORDERED;
 	}
-
 
 	public long getId() {
 		return id;
@@ -74,6 +78,14 @@ public class Order {
 
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
+	}
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public CurrentState getCurrentState() {
