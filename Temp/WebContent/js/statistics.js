@@ -314,8 +314,11 @@ $('#add-chart')
 													.val(ui.item.value);
 											$('#supermarket-id-' + last).val(
 													ui.item.id);
-											$('#data-type-' + last)
-													.slideToggle('slow');
+											if ($('#data-type-' + last).css(
+													'display') == 'none') {
+												$('#data-type-' + last)
+														.slideToggle('slow');
+											}
 										}
 									});
 
@@ -346,8 +349,11 @@ $('#add-chart')
 													ui.item.value);
 											$('#category-id-' + last).val(
 													ui.item.id);
-											$('#data-type-' + last)
-													.slideToggle('slow');
+											if ($('#data-type-' + last).css(
+													'display') == 'none') {
+												$('#data-type-' + last)
+														.slideToggle('slow');
+											}
 										}
 									});
 
@@ -378,8 +384,11 @@ $('#add-chart')
 													ui.item.value);
 											$('#product-id-' + last).val(
 													ui.item.id);
-											$('#data-type-' + last)
-													.slideToggle('slow');
+											if ($('#data-type-' + last).css(
+													'display') == 'none') {
+												$('#data-type-' + last)
+														.slideToggle('slow');
+											}
 										}
 									});
 
