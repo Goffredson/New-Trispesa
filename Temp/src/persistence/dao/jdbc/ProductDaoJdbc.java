@@ -613,4 +613,35 @@ public class ProductDaoJdbc implements ProductDao {
 		return years;
 	}
 
+	@Override
+	public ArrayList<Product> retrieveProductsOfOrder(long id) {
+		Connection connection = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+			connection = this.dataSource.getConnection();
+			String query = "select * from product as p, order_contains_product as o where p.id=o.product and o.orders=?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				products.add(new Product(resultSet.getLong("id"), resultSet.getLong("barcode"),
+						resultSet.getString("name"), resultSet.getString("brand"), resultSet.getDouble("weight"),
+						new SuperMarketDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("supermarket")),
+						new CategoryDaoJdbc(dataSource).retrieveByPrimaryKey(resultSet.getLong("category")),
+						resultSet.getBoolean("offbrand"), resultSet.getDouble("price"), resultSet.getLong("quantity"),
+						resultSet.getDouble("discount"), resultSet.getString("image_path"),
+						resultSet.getBoolean("deleted")));
+			}
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+		}
+		return products;
+	}
+
 }

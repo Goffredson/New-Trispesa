@@ -20,7 +20,12 @@ function typeSelected(i) {
 			$('#category-string-' + i.toString()).prop('disabled', false);
 			$('#all-products-check-' + i.toString()).prop('checked', false);
 			$('#product-string-' + i.toString()).prop('disabled', false);
-			chart[i].destroy();
+			$('#supermarket-string-' + i.toString()).val('');
+			$('#category-string-' + i.toString()).val('');
+			$('#product-string-' + i.toString()).val('');
+			if (chart[i] != null) {
+				chart[i].destroy();
+			}
 		}
 	} else if ($('#type-select-' + i.toString()).val() == 'supermarket') {
 		$('#all-supermarkets-' + i.toString()).slideToggle('slow');
@@ -38,7 +43,12 @@ function typeSelected(i) {
 			$('#category-string-' + i.toString()).prop('disabled', false);
 			$('#all-products-check-' + i.toString()).prop('checked', false);
 			$('#product-string-' + i.toString()).prop('disabled', false);
-			chart[i].destroy();
+			$('#supermarket-string-' + i.toString()).val('');
+			$('#category-string-' + i.toString()).val('');
+			$('#product-string-' + i.toString()).val('');
+			if (chart[i] != null) {
+				chart[i].destroy();
+			}
 		}
 	} else if ($('#type-select-' + i.toString()).val() == 'category') {
 		$('#all-categories-' + i.toString()).slideToggle('slow');
@@ -56,7 +66,12 @@ function typeSelected(i) {
 			$('#category-string-' + i.toString()).prop('disabled', false);
 			$('#all-products-check-' + i.toString()).prop('checked', false);
 			$('#product-string-' + i.toString()).prop('disabled', false);
-			chart[i].destroy();
+			$('#supermarket-string-' + i.toString()).val('');
+			$('#category-string-' + i.toString()).val('');
+			$('#product-string-' + i.toString()).val('');
+			if (chart[i] != null) {
+				chart[i].destroy();
+			}
 		}
 	} else if ($('#type-select-' + i.toString()).val() == 'product') {
 		$('#all-products-' + i.toString()).slideToggle('slow');
@@ -74,7 +89,12 @@ function typeSelected(i) {
 			$('#category-string-' + i.toString()).prop('disabled', false);
 			$('#all-products-check-' + i.toString()).prop('checked', false);
 			$('#product-string-' + i.toString()).prop('disabled', false);
-			chart[i].destroy();
+			$('#supermarket-string-' + i.toString()).val('');
+			$('#category-string-' + i.toString()).val('');
+			$('#product-string-' + i.toString()).val('');
+			if (chart[i] != null) {
+				chart[i].destroy();
+			}
 		}
 	}
 }
@@ -83,11 +103,15 @@ function allSupermarketsSelected(i) {
 	if ($('#all-supermarkets-check-' + i.toString()).is(':checked')) {
 		$('#supermarket-string-' + i.toString()).prop('disabled', true);
 		$('#supermarket-string-' + i.toString()).val('');
-		$('#data-type-' + i.toString()).slideToggle('slow');
+		if ($('#data-type-' + i.toString()).css('display') == 'none') {
+			$('#data-type-' + i.toString()).slideToggle('slow');
+		}
 	} else {
 		$('#supermarket-string-' + i.toString()).prop('disabled', false);
 		$('#data-type-' + i.toString()).slideToggle('slow');
-		chart[i].destroy();
+		if (chart[i] != null) {
+			chart[i].destroy();
+		}
 	}
 }
 
@@ -95,11 +119,15 @@ function allCategoriesSelected(i) {
 	if ($('#all-categories-check-' + i.toString()).is(':checked')) {
 		$('#category-string-' + i.toString()).prop('disabled', true);
 		$('#category-string-' + i.toString()).val('');
-		$('#data-type-' + i.toString()).slideToggle('slow');
+		if ($('#data-type-' + i.toString()).css('display') == 'none') {
+			$('#data-type-' + i.toString()).slideToggle('slow');
+		}
 	} else {
 		$('#category-string-' + i.toString()).prop('disabled', false);
 		$('#data-type-' + i.toString()).slideToggle('slow');
-		chart[i].destroy();
+		if (chart[i] != null) {
+			chart[i].destroy();
+		}
 	}
 }
 
@@ -107,11 +135,15 @@ function allProductsSelected(i) {
 	if ($('#all-products-check-' + i.toString()).is(':checked')) {
 		$('#product-string-' + i.toString()).prop('disabled', true);
 		$('#product-string-' + i.toString()).val('');
-		$('#data-type-' + i.toString()).slideToggle('slow');
+		if ($('#data-type-' + i.toString()).css('display') == 'none') {
+			$('#data-type-' + i.toString()).slideToggle('slow');
+		}
 	} else {
 		$('#product-string-' + i.toString()).prop('disabled', false);
 		$('#data-type-' + i.toString()).slideToggle('slow');
-		chart[i].destroy();
+		if (chart[i] != null) {
+			chart[i].destroy();
+		}
 	}
 }
 

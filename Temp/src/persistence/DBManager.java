@@ -549,4 +549,8 @@ public class DBManager {
 		return years;
 	}
 
+	public ArrayList<Product> getProductsOfOrder(long id) {
+		return getProductDao().retrieveProductsOfOrder(id);
+	}
+
 }

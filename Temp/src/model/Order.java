@@ -37,7 +37,7 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 		this.orderDate = orderDate;
 		this.products = products;
-		this.currentState = CurrentState.ORDERED;
+		this.currentState = CurrentState.ORDINATO;
 	}
 
 	public long getId() {

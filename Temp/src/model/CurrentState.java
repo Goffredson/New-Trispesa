@@ -1,5 +1,5 @@
 package model;
 
 public enum CurrentState {
-	ORDERED, SHIPPED, DELIVERED
+	ORDINATO, SPEDITO, CONSEGNATO
 }

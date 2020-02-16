@@ -34,6 +34,7 @@
 <!-- Script -->
 <script src="js/cart.js"></script>
 <script src="js/order.js"></script>
+<script src="js/viewOrder.js"></script>
 <script src="js/login.js"></script>
 <script src="js/animations.js"></script>
 <!-- CSS -->
@@ -132,24 +133,62 @@
 
 	<div class="container">
 		<h2>Riepilogo ordini</h2>
-		<table class="table table-hover table-responsive">
-			<tr>
-				<th>Data</th>
-				<th>Stato</th>
-				<th>Indirizzo di consegna</th>
-				<th>Metodo di pagamento</th>
-				<th>Prezzo</th>
-			</tr>
-			<c:forEach items="${orders}" var="order">
+		<div class="table-responsive">
+			<table class="table table-hover">
 				<tr>
-					<td>${order.orderDate}</td>
-					<td>${order.currentState}</td>
-					<td>${order.deliveryAddress}</td>
-					<td>${order.paymentMethod}</td>
-					<td>${order.totalPrice}</td>
+					<th>Data</th>
+					<th>Indirizzo di consegna</th>
+					<th>Metodo di pagamento</th>
+					<th>Prezzo</th>
+					<th></th>
 				</tr>
-			</c:forEach>
-		</table>
+				<c:forEach items="${orders}" var="order">
+					<tr>
+						<td>${order.orderDate}</td>
+						<td>${order.deliveryAddress}</td>
+						<td>${order.paymentMethod}</td>
+						<td>${order.totalPrice}</td>
+						<td><button id="details-${order.id}" type="button"
+								class="btn mod-item"
+								onclick="viewOrder(${order.id}, '${order.currentState}')">Dettagli</button></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+
+	<!-- MODALE -->
+	<div class="modal" id="order-details-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 id="result-modal-title" class="modal-title"></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<!-- Progress bar -->
+					<div id="progress-container" class="container"></div>
+					<!-- lista prodotti -->
+					<div class="table-responsive">
+						<h4 style="margin-top: 20px;">PRODOTTI</h4>
+						<table id="products-table" class="table table-hover">
+							<tr>
+								<th></th>
+								<th>Prodotto</th>
+								<th>Supermercato</th>
+							</tr>
+							<!-- append(tr th nome th super th immagine -->
+						</table>
+					</div>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="close" data-dismiss="modal">Chiudi</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<footer class="footer-distributed">

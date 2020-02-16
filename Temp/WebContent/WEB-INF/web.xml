@@ -234,4 +234,14 @@
 		<url-pattern>/administration/statistics/manageData</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ViewOrder</servlet-name>
+		<servlet-class>controller.user.ViewOrder</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ViewOrder</servlet-name>
+		<url-pattern>/user/viewOrder</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

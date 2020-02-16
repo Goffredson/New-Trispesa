@@ -48,4 +48,6 @@ public interface ProductDao {
 
 	public HashMap<String, Long> getYearlyUnitsForProduct(long id);
 
+	public ArrayList<Product> retrieveProductsOfOrder(long id);
+
 }
