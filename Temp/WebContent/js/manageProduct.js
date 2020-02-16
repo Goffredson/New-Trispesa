@@ -476,3 +476,35 @@ function deleteProduct(id) {
 		}
 	});
 }
+
+function queryProducts() {
+	var queryString = $('#query-string').val().toUpperCase();
+	var tableBody = $('#product-table-body');
+	var rows = tableBody.find('tr');
+
+	rows
+			.each(function() {
+				var cols = $(this).find('td');
+				var barcode = $(cols)[0];
+				var name = $(cols)[1];
+				var brand = $(cols)[2];
+				var supermarket = $(cols)[4];
+				var category = $(cols)[5];
+				if (barcode && name && brand && supermarket && category) {
+					var textBarcode = $(barcode).text().trim();
+					var textName = $(name).text().trim();
+					var textBrand = $(brand).text().trim();
+					var textSupermarket = $(supermarket).text().trim();
+					var textCategory = $(category).text().trim();
+					if ((textBarcode.toUpperCase().indexOf(queryString) > -1)
+							|| (textName.toUpperCase().indexOf(queryString) > -1)
+							|| (textBrand.toUpperCase().indexOf(queryString) > -1)
+							|| (textSupermarket.toUpperCase().indexOf(
+									queryString) > -1)
+							|| (textCategory.toUpperCase().indexOf(queryString) > -1))
+						$(this).show();
+					else
+						$(this).hide();
+				}
+			});
+}

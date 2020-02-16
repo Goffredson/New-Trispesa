@@ -73,17 +73,13 @@
 		<div class="d-flex justify-content-between">
 			<!-- barra di ricerca -->
 			<div id="search-bar" class="input-group">
-				<input type="text" class="form-control" placeholder="Supermercato">
-				<div class="input-group-append">
-					<a href="#"><span class="input-group-text"><img
-							src="../images/search.png" width="25px" /></span></a>
-				</div>
+				<input id="query-string" onkeyup="querySuperMarkets()" type="text"
+					class="form-control" placeholder="Supermercato">
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div>
 				<button id="addSuperMarket" onclick="prepareAddSupermarket()"
-					class="btn add-item" role="button">+ Aggiungi
-					supermercato</button>
+					class="btn add-item" role="button">+ Aggiungi supermercato</button>
 			</div>
 		</div>
 
@@ -97,62 +93,65 @@
 				<th></th>
 				<th></th>
 			</tr>
-			<c:set var="cont" value="1"></c:set>
-			<c:forEach items="${superMarkets}" var="superMarket">
-				<tr>
-					<td>${superMarket.name}</td>
-					<td>${superMarket.country}</td>
-					<td>${superMarket.city}</td>
-					<td>${superMarket.address}</td>
-					<c:if test="${superMarket.affiliate == true}">
-						<td id="supermarket-affiliate">SI</td>
-					</c:if>
-					<c:if test="${superMarket.affiliate == false}">
-						<td id="supermarket-not-affiliate">NO</td>
-					</c:if>
-					<td width="10%"><button
-							id="modify-supermarket-${superMarket.id}"
-							onclick="prepareModSupermarket(${superMarket.id})"
-							class="btn mod-item" role="button">Modifica supermercato</button></td>
-					<td width="10%"><c:if test="${superMarket.affiliate == true}">
-							<button data-toggle="modal" data-target="#delete-modal-${cont}"
-								class="btn del-item" role="button">Rimuovi
-								affiliazione</button>
-						</c:if> <c:if test="${superMarket.affiliate == false}">
-							<button onclick="affiliateSupermarket(${superMarket.id})"
-								class="btn add-item" role="button">Aggiungi
-								affiliazione</button>
-						</c:if> <!-- The Modal -->
-						<div class="modal" id="delete-modal-${cont}">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<!-- Modal Header -->
-									<div class="modal-header">
-										<h4 class="modal-title">ATTENZIONE!</h4>
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-									</div>
-									<!-- Modal body -->
-									<div class="modal-body">
-										Rimuovendo l'affiliazione del supermercato verrano rimossi
-										tutti i prodotti venduti dal supermercato.<br>Sei sicuro
-										di voler continuare?
-									</div>
-									<!-- Modal footer -->
-									<div class="modal-footer">
-										<button
-											onclick="deleteSupermarket(${superMarket.id}, ${cont})"
-											type="button" class="btn del-item">Rimuovi
-											affilizione</button>
-										<button type="button" class="btn back-item"
-											data-dismiss="modal">Annulla</button>
-									</div>
+			<tbody id="super-market-table-body">
+				<c:set var="cont" value="1"></c:set>
+				<c:forEach items="${superMarkets}" var="superMarket">
+					<tr>
+						<td>${superMarket.name}</td>
+						<td>${superMarket.country}</td>
+						<td>${superMarket.city}</td>
+						<td>${superMarket.address}</td>
+						<c:if test="${superMarket.affiliate == true}">
+							<td id="supermarket-affiliate">SI</td>
+						</c:if>
+						<c:if test="${superMarket.affiliate == false}">
+							<td id="supermarket-not-affiliate">NO</td>
+						</c:if>
+						<td width="10%"><button
+								id="modify-supermarket-${superMarket.id}"
+								onclick="prepareModSupermarket(${superMarket.id})"
+								class="btn mod-item" role="button">Modifica
+								supermercato</button></td>
+						<td width="10%"><c:if test="${superMarket.affiliate == true}">
+								<button data-toggle="modal" data-target="#delete-modal-${cont}"
+									class="btn del-item" role="button">Rimuovi
+									affiliazione</button>
+							</c:if> <c:if test="${superMarket.affiliate == false}">
+								<button onclick="affiliateSupermarket(${superMarket.id})"
+									class="btn add-item" role="button">Aggiungi
+									affiliazione</button>
+							</c:if> <!-- The Modal -->
+							<div class="modal" id="delete-modal-${cont}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">ATTENZIONE!</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+										<!-- Modal body -->
+										<div class="modal-body">
+											Rimuovendo l'affiliazione del supermercato verrano rimossi
+											tutti i prodotti venduti dal supermercato.<br>Sei sicuro
+											di voler continuare?
+										</div>
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<button
+												onclick="deleteSupermarket(${superMarket.id}, ${cont})"
+												type="button" class="btn del-item">Rimuovi
+												affilizione</button>
+											<button type="button" class="btn back-item"
+												data-dismiss="modal">Annulla</button>
+										</div>
 
+									</div>
 								</div>
-							</div>
-						</div></td>
-				</tr>
-				<c:set var="cont" value="${cont + 1}"></c:set>
-			</c:forEach>
+							</div></td>
+					</tr>
+					<c:set var="cont" value="${cont + 1}"></c:set>
+				</c:forEach>
+			</tbody>
 		</table>
 	</div>
 
@@ -276,8 +275,7 @@
 						class="btn add-item"></button>
 					<button type="button" class="btn back-item"
 						onclick="clearMapForm()">Reset</button>
-					<button type="button" class="btn back-item"
-						data-dismiss="modal">Chiudi</button>
+					<button type="button" class="btn back-item" data-dismiss="modal">Chiudi</button>
 				</div>
 			</div>
 		</div>

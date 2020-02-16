@@ -359,3 +359,27 @@ function modSupermarket(supermarket) {
 		}
 	});
 }
+
+function querySuperMarkets() {
+    var queryString = $('#query-string').val().toUpperCase();
+    var tableBody = $('#super-market-table-body');
+    var rows = tableBody.find('tr');
+
+    rows.each( function() {
+        var cols = $(this).find('td');
+        var name = $(cols)[0];
+        var country = $(cols)[1];
+        var city = $(cols)[2];
+        var address = $(cols)[3];
+        if(name && country && city && address) {
+            var textName = $(name).text().trim();
+            var textCountry = $(country).text().trim();
+            var textCity = $(city).text().trim();
+            var textAddress = $(address).text().trim();
+            if((textName.toUpperCase().indexOf(queryString) > -1) || (textCountry.toUpperCase().indexOf(queryString) > -1) || (textCity.toUpperCase().indexOf(queryString) > -1) || (textAddress.toUpperCase().indexOf(queryString) > -1))
+                $(this).show();
+            else
+                $(this).hide();
+        }
+    });
+}

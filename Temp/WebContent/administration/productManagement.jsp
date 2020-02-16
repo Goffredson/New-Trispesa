@@ -65,11 +65,8 @@
 		<div class="d-flex justify-content-between">
 			<!-- barra di ricerca -->
 			<div id="search-bar" class="input-group">
-				<input type="text" class="form-control" placeholder="Prodotto">
-				<div class="input-group-append">
-					<a href="#"><span class="input-group-text"><img
-							src="../images/search.png" width="25px" /></span></a>
-				</div>
+				<input id="query-string" onkeyup="queryProducts()" type="text"
+					class="form-control" placeholder="Prodotto">
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div id="addProduct" class="">
@@ -93,31 +90,33 @@
 				<th></th>
 				<th></th>
 			</tr>
-			<c:forEach items="${products}" var="product">
-				<tr>
-					<td>${product.barcode}</td>
-					<td>${product.name}</td>
-					<td>${product.brand}</td>
-					<td>${product.weight}g</td>
-					<td>${product.superMarket}</td>
-					<td>${product.category.name}</td>
-					<c:if test="${product.offBrand == true}">
-						<td id="product-offbrand">NO</td>
-					</c:if>
-					<c:if test="${product.offBrand == false}">
-						<td id="product-not-offbrand">SI</td>
-					</c:if>
-					<td>&euro; ${product.price}</td>
-					<td>${product.quantity}pz.</td>
-					<td>&euro; ${product.discount}</td>
-					<td width="10%"><button id="modify-product-${product.id}"
-							onclick="prepareModProduct(${product.id})" class="btn mod-item"
-							role="button">Modifica prodotto</button></td>
-					<td width="10%"><button id="delete-product-${product.id}"
-							onclick="deleteProduct(${product.id})" class="btn del-item"
-							role="button">Elimina prodotto</button></td>
-				</tr>
-			</c:forEach>
+			<tbody id="product-table-body">
+				<c:forEach items="${products}" var="product">
+					<tr>
+						<td>${product.barcode}</td>
+						<td>${product.name}</td>
+						<td>${product.brand}</td>
+						<td>${product.weight}g</td>
+						<td>${product.superMarket}</td>
+						<td>${product.category.name}</td>
+						<c:if test="${product.offBrand == true}">
+							<td id="product-offbrand">NO</td>
+						</c:if>
+						<c:if test="${product.offBrand == false}">
+							<td id="product-not-offbrand">SI</td>
+						</c:if>
+						<td>&euro; ${product.price}</td>
+						<td>${product.quantity}pz.</td>
+						<td>&euro; ${product.discount}</td>
+						<td width="10%"><button id="modify-product-${product.id}"
+								onclick="prepareModProduct(${product.id})" class="btn mod-item"
+								role="button">Modifica prodotto</button></td>
+						<td width="10%"><button id="delete-product-${product.id}"
+								onclick="deleteProduct(${product.id})" class="btn del-item"
+								role="button">Elimina prodotto</button></td>
+					</tr>
+				</c:forEach>
+			</tbody>
 		</table>
 	</div>
 
