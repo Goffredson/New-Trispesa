@@ -59,8 +59,8 @@
 						href="">Gestione supermercati</a></li>
 					<li class="nav-item"><a class="btn" id="product-button"
 						href="product">Gestione prodotti</a></li>
-					<li class="nav-item"><a class="btn" id="stats-button" href="#">Statistiche</a></li>
-					<li class="nav-item"><a class="btn" id="maps-button" href="#">Mappe</a></li>
+					<li class="nav-item"><a class="btn" id="stats-button"
+						href="statistics">Statistiche</a></li>
 					<li class="nav-item py-0"><a href="../user/home"
 						id="logout-button" class="btn">Logout</a></li>
 				</ul>
@@ -73,8 +73,8 @@
 		<div class="d-flex justify-content-between">
 			<!-- barra di ricerca -->
 			<div id="search-bar" class="input-group">
-				<input id="query-string" onkeyup="querySuperMarkets()" type="text"
-					class="form-control" placeholder="Supermercato">
+				<input id="query-string" onkeyup="querySuperMarketsString()"
+					type="text" class="form-control" placeholder="Supermercato">
 			</div>
 			<!-- Aggiungi supermercato -->
 			<div>

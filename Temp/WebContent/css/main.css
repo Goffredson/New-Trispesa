@@ -1,6 +1,8 @@
 /* Parte index */
 body {
 	padding-top: 56px;
+	position: relative;
+	min-height: 100vh;
 }
 
 .color-scheme {
@@ -454,4 +456,8 @@ div.scrollmenu a:hover {
 	width: 100%;
 	top: 0%;
 	left: 0%;
+}
+
+#container {
+	padding-bottom: 38px !important;
 }

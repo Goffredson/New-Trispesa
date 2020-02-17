@@ -360,7 +360,7 @@ function modSupermarket(supermarket) {
 	});
 }
 
-function querySuperMarkets() {
+function querySuperMarketsString() {
     var queryString = $('#query-string').val().toUpperCase();
     var tableBody = $('#super-market-table-body');
     var rows = tableBody.find('tr');

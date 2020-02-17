@@ -51,8 +51,8 @@
 						href="supermarket">Gestione supermercati</a></li>
 					<li class="nav-item"><a class="btn" id="product-button"
 						href="">Gestione prodotti</a></li>
-					<li class="nav-item"><a class="btn" id="stats-button" href="#">Statistiche</a></li>
-					<li class="nav-item"><a class="btn" id="maps-button" href="#">Mappe</a></li>
+					<li class="nav-item"><a class="btn" id="stats-button"
+						href="statistics">Statistiche</a></li>
 					<li class="nav-item py-0"><a href="../user/home"
 						id="logout-button" class="btn">Logout</a></li>
 				</ul>
@@ -60,63 +60,17 @@
 		</div>
 	</nav>
 
-	<div class="container">
+	<div id="container" class="container">
 		<div class="row mx-auto d-flex justify-content-center">
 			<button id="add-chart" style="margin: 10px;" type="button"
 				class="btn add-item">+ Aggiungi un altro grafico</button>
 		</div>
-		<div id="charts-container" class="row mx-auto d-flex justify-content-center">
-<!-- 			<div id="chart-1" class="col-lg-6 col-md-6 mb-4"> -->
-<!-- 				<form> -->
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for="type">Tipo:</label> <select id="type-select" -->
-<!-- 							onchange="typeSelected()" name="type" class="form-control"> -->
-<!-- 							<option value="null">---</option> -->
-<!-- 							<option value="supermarket">Supermercati</option> -->
-<!-- 							<option value="category">Categorie</option> -->
-<!-- 							<option value="product">Prodotti</option> -->
-<!-- 						</select> -->
-<!-- 					</div> -->
-<!-- 					<div id="all-supermarkets" class="form-group" -->
-<!-- 						style="display: none;"> -->
-<!-- 						<input id="all-supermarkets-check" name="allSupermarkets" -->
-<!-- 							type="checkbox" onclick="allSupermarketsSelected()" /> Tutti i -->
-<!-- 						supermercati <input id="supermarket-string" -->
-<!-- 							placeholder="Digita e scegli..." class="form-control" -->
-<!-- 							name="supermarket" type="text" /> <input id="supermarket-id" -->
-<!-- 							type="hidden" name="supermarket" /> -->
-<!-- 					</div> -->
-<!-- 					<div id="all-categories" class="form-group" style="display: none;"> -->
-<!-- 						<input id="all-categories-check" name="allCategories" -->
-<!-- 							type="checkbox" onclick="allCategoriesSelected()" /> Tutte le -->
-<!-- 						categorie <input id="category-string" -->
-<!-- 							placeholder="Digita e scegli..." class="form-control" -->
-<!-- 							name="category" type="text" /><input id="category-id" -->
-<!-- 							type="hidden" name="category" /> -->
-<!-- 					</div> -->
-<!-- 					<div id="all-products" class="form-group" style="display: none;"> -->
-<!-- 						<input id="all-products-check" name="allProducts" type="checkbox" -->
-<!-- 							onclick="allProductsSelected()" /> Tutti i prodotti <input -->
-<!-- 							id="product-string" placeholder="Digita e scegli..." -->
-<!-- 							class="form-control" name="product" type="text" /><input -->
-<!-- 							id="product-id" type="hidden" name="product" /> -->
-<!-- 					</div> -->
-<!-- 					<div id="data-type" class="form-group" style="display: none;"> -->
-<!-- 						<label for="type">Tipo dei dati:</label> <select -->
-<!-- 							id="data-type-select" name="dataType" class="form-control"> -->
-<!-- 							<option value="cash" selected>Guadagni in &euro;</option> -->
-<!-- 							<option value="units">Unità vendute</option> -->
-<!-- 						</select> -->
-<!-- 						<button style="margin: 10px;" id="generate-graph" type="button" -->
-<!-- 							class="btn add-item">Genera grafico</button> -->
-<!-- 					</div> -->
-<!-- 				</form> -->
-<!-- 				<div id="chart-container-1" style="height: 370px; width: 100%;"></div> -->
-<!-- 			</div> -->
-		</div>
+		<div id="charts-container"
+			class="row mx-auto d-flex justify-content-center"></div>
 	</div>
 
-	<footer class="footer-distributed">
+	<footer style="position: absolute; bottom: 0px;"
+		class="footer-distributed">
 		<div class="footer-left">
 			<h3>
 				Tri<span class="span-title">Spesa</span>

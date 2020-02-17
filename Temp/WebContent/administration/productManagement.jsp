@@ -51,8 +51,8 @@
 						href="supermarket">Gestione supermercati</a></li>
 					<li class="nav-item"><a class="btn" id="product-button"
 						href="">Gestione prodotti</a></li>
-					<li class="nav-item"><a class="btn" id="stats-button" href="#">Statistiche</a></li>
-					<li class="nav-item"><a class="btn" id="maps-button" href="#">Mappe</a></li>
+					<li class="nav-item"><a class="btn" id="stats-button"
+						href="statistics">Statistiche</a></li>
 					<li class="nav-item py-0"><a href="../user/home"
 						id="logout-button" class="btn">Logout</a></li>
 				</ul>

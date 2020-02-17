@@ -50,8 +50,7 @@
 						href="administration/supermarket">Gestione supermercati</a></li>
 					<li class="nav-item"><a class="btn" id="product-button"
 						href="administration/product">Gestione prodotti</a></li>
-					<li class="nav-item"><a class="btn" id="stats-button" href="#">Statistiche</a></li>
-					<li class="nav-item"><a class="btn" id="maps-button" href="#">Mappe</a></li>
+					<li class="nav-item"><a class="btn" id="stats-button" href="administration/statistics">Statistiche</a></li>
 					<li class="nav-item py-0"><a href="user/home"
 						id="logout-button" class="btn">Logout</a></li>
 				</ul>
@@ -66,7 +65,7 @@
 				${sessionScope.administrator.username}</h2>
 		</div>
 
-		<div class="row mx-auto">
+		<div class="row mx-auto d-flex justify-content-center">
 			<div class="col-lg-6 col-md-6 mb-4">
 				<a href="administration/supermarket">
 					<div class="card d-flex">
@@ -90,9 +89,7 @@
 					</div>
 				</a>
 			</div>
-		</div>
 
-		<div class="row mx-auto">
 			<div class="col-lg-6 col-md-6 mb-4">
 				<a href="administration/statistics">
 					<div class="card d-flex">
@@ -104,20 +101,7 @@
 					</div>
 				</a>
 			</div>
-
-			<div class="col-lg-6 col-md-6 mb-4">
-				<a href="#">
-					<div class="card d-flex">
-						<img class="card-img-top" src="images/administration/maps.jpg"
-							height="250" alt="" />
-						<div class="card-body mx-auto">
-							<h4 class="card-title admin-card">Mappe</h4>
-						</div>
-					</div>
-				</a>
-			</div>
 		</div>
-
 	</div>
 
 	<footer class="footer-distributed">
@@ -164,7 +148,6 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>

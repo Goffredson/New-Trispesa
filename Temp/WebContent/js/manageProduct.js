@@ -103,6 +103,8 @@ $(document).ready(function() {
 					if (data.length == 0) {
 						var barcode = $('#barcode').val();
 						clearForm();
+						unlockAll();
+						manageAddProduct();
 						$('#barcode').val(barcode);
 					}
 					resp(data);
@@ -111,31 +113,28 @@ $(document).ready(function() {
 		},
 		minLength : 2,
 		select : function(e, ui) {
+			clearForm();
+			unlockSome();
 			fillForm(ui.item.id);
-		}
+		},
 	});
 });
 
-$('#barcode').focusout(function(e) {
-	$.ajax({
-		type : "GET",
-		url : 'product/manageProductForm?action=eq',
-		dataType : "json",
-		contentType : "application/json; charset=UTF-8",
-		data : {
-			term : $('#barcode').val()
-		},
-		success : function(data) {
-			if (data.length == 0) {
-			} else {
-				var barcode = $('#barcode').val();
-				$('#barcode').val(barcode);
-				clearForm();
-				fillForm(data[0].id);
-			}
-		}
-	});
+$('#barcode').change(function(e) {
+	$('#barcode').removeClass('is-valid').removeClass('is-invalid');
 });
+
+function unlockAll() {
+	$('select').prop('disabled', false);
+	$('input').prop('readonly', false);
+}
+
+function unlockSome() {
+	$('#superMarket').prop('disabled', false);
+	$('#price').prop('readonly', false);
+	$('#quantity').prop('readonly', false);
+	$('#discount').prop('readonly', false);
+}
 
 function fillForm(id) {
 	$.ajax({
@@ -171,6 +170,7 @@ function fillForm(id) {
 									+ data.supermarkets[i].address
 									+ '</option>');
 				}
+				$('#category').empty();
 				$('#category').append(
 						'<option value="' + data.product.category.id + '">'
 								+ data.product.category.name + '</option>');
@@ -206,11 +206,15 @@ function clearForm() {
 	$('#price').val('');
 	$('#quantity').val('');
 	$('#discount').val('');
-	$('select').prop('disabled', false);
-	$('input').prop('readonly', false);
+	$('select').prop('disabled', true);
+	$('input').prop('readonly', true);
+	$('#barcode').prop('readonly', false);
 	$('#image')
 			.attr('src',
 					'https://drive.google.com/uc?export=view&id=1DbMKHR-mObaG56QAVDqGHoO4XoXStC2M');
+	$('.is-valid').removeClass('is-valid');
+	$('.is-invalid').removeClass('is-invalid');
+	$('#query-string').prop('readonly', false);
 }
 
 $('#result-modal').on('hide.bs.modal', function(event) {
@@ -266,6 +270,8 @@ function manageAddProduct() {
 				$('#result-modal').modal('show');
 				success = false;
 			} else {
+				$('#superMarket').empty();
+				$('#category').empty();
 				for (i in data.supermarkets)
 					$('#superMarket').append(
 							'<option value="' + data.supermarkets[i].id + '">'
